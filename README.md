@@ -32,7 +32,7 @@ PathFinder is a React Native (Expo) mobile application for tracking physical mov
 
 ## How to run the project
 
-### 1. Install dependencies
+### Install dependencies and Start the app
 
 ```bash
 npm install
