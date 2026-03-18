@@ -1,54 +1,44 @@
-<<<<<<< HEAD
-# Welcome to your Expo app 👋
+# PathFinder
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+PathFinder is a React Native (Expo) mobile application for tracking physical movement in real time, saving routes locally, and reviewing past activities on a map.
 
-## Get started
+---
 
-1. Install dependencies
+##  Tech Stack
 
-   ```bash
-   npm install
-   ```
+- Expo (Managed Workflow)
+- TypeScript
+- Expo Router (file-based navigation)
+- react-native-maps
+- expo-location
+- expo-sqlite
+- Zustand (state management)
+- NativeWind (Tailwind for React Native)
+- MapTiler (map tiles provider)
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+##  Features
 
-In the output, you'll find options to open the app in a
+- Real-time GPS tracking
+- Polyline route visualization on map
+- Distance and duration tracking
+- Local storage of activities using SQLite
+- History screen with saved routes
+- Detail screen with route replay
+- Error handling for permissions and GPS failures
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## How to run the project
 
-## Get a fresh project
-
-When you're ready, run:
+### 1. Install dependencies
 
 ```bash
-npm run reset-project
-```
+npm install
+npx expo install expo-router expo-location expo-sqlite react-native-maps
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Start the app
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-=======
-# PathFinder-Application
->>>>>>> ccdfc089f40fc5a6bcb454fc084dcb671a8b6e91
+```bash
+npx expo start
