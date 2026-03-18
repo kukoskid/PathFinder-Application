@@ -42,6 +42,8 @@ npx expo install expo-router expo-location expo-sqlite react-native-maps
 
 npx expo start
 
+### App can be tested using Expo Go App on the phone or IOS or Android Emulator on computer
+
 **AI Literacy**
 
 I used AI (primarily ChatGPT) to accelerate development of more complex parts of the app, especially around location tracking and map integration.
