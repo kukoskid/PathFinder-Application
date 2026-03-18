@@ -16,6 +16,7 @@ export function useTracking() {
     } = useTrackingStore();
 
     const [permissionDenied, setPermissionDenied] = useState(false);
+    const [locationError, setLocationError] = useState<string | null>(null);
     const [currentLocation, setCurrentLocation] =
         useState<Location.LocationObjectCoords | null>(null);
 
@@ -27,47 +28,71 @@ export function useTracking() {
     }, [tick]);
 
     async function requestPermission() {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        const granted = status === "granted";
-        setPermissionDenied(!granted);
-        return granted;
+        try {
+            const { status } = await Location.requestForegroundPermissionsAsync();
+            const granted = status === "granted";
+            setPermissionDenied(!granted);
+
+            if (!granted) {
+                setLocationError("Дозволата за локација не е одобрена.");
+            } else {
+                setLocationError(null);
+            }
+
+            return granted;
+        } catch (error) {
+            setLocationError("Не успеав да побарам дозвола за локација.");
+            return false;
+        }
     }
 
     async function loadInitialLocation() {
-        const granted = await requestPermission();
-        if (!granted) return;
+        try {
+            const granted = await requestPermission();
+            if (!granted) return;
 
-        const location = await Location.getCurrentPositionAsync({});
-        setCurrentLocation(location.coords);
+            const location = await Location.getCurrentPositionAsync({});
+            setCurrentLocation(location.coords);
+            setLocationError(null);
+        } catch (error) {
+            setLocationError("Не успеав да ја вчитам моменталната локација.");
+        }
     }
 
     async function startTracking() {
-        const granted = await requestPermission();
-        if (!granted) return;
+        try {
+            const granted = await requestPermission();
+            if (!granted) return;
 
-        start();
+            start();
 
-        const first = await Location.getCurrentPositionAsync({});
-        setCurrentLocation(first.coords);
-        addPoint({
-            latitude: first.coords.latitude,
-            longitude: first.coords.longitude,
-        });
+            const first = await Location.getCurrentPositionAsync({});
+            setCurrentLocation(first.coords);
+            addPoint({
+                latitude: first.coords.latitude,
+                longitude: first.coords.longitude,
+            });
 
-        subRef.current = await Location.watchPositionAsync(
-            {
-                accuracy: Location.Accuracy.BestForNavigation,
-                timeInterval: 3000,
-                distanceInterval: 5,
-            },
-            (location) => {
-                setCurrentLocation(location.coords);
-                addPoint({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                });
-            }
-        );
+            subRef.current = await Location.watchPositionAsync(
+                {
+                    accuracy: Location.Accuracy.BestForNavigation,
+                    timeInterval: 3000,
+                    distanceInterval: 5,
+                },
+                (location) => {
+                    setCurrentLocation(location.coords);
+                    addPoint({
+                        latitude: location.coords.latitude,
+                        longitude: location.coords.longitude,
+                    });
+                }
+            );
+
+            setLocationError(null);
+        } catch (error) {
+            setLocationError("Настана проблем при стартување на tracking.");
+            stop();
+        }
     }
 
     function stopTracking() {
@@ -80,6 +105,7 @@ export function useTracking() {
         subRef.current?.remove();
         subRef.current = null;
         reset();
+        setLocationError(null);
     }
 
     useEffect(() => {
@@ -97,6 +123,7 @@ export function useTracking() {
         distanceMeters,
         currentLocation,
         permissionDenied,
+        locationError,
         startTracking,
         stopTracking,
         clearTracking,

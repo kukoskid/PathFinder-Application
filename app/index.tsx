@@ -15,6 +15,7 @@ export default function HomeScreen() {
     distanceMeters,
     currentLocation,
     permissionDenied,
+    locationError,
     startTracking,
     stopTracking,
     clearTracking,
@@ -84,8 +85,12 @@ export default function HomeScreen() {
           )}
         </MapView>
 
-        <View className="p-4 bg-white rounded-t-3xl gap-3">
+        <View className="gap-3 rounded-t-3xl bg-white p-4">
           <Text className="text-2xl font-bold">PathFinder</Text>
+
+          {locationError ? (
+              <Text className="text-sm text-red-600">{locationError}</Text>
+          ) : null}
 
           <View className="flex-row gap-3">
             <View className="flex-1 rounded-2xl bg-zinc-100 p-3">
@@ -108,23 +113,20 @@ export default function HomeScreen() {
                   onPress={startTracking}
                   className="rounded-2xl bg-black py-4"
               >
-                <Text className="text-center text-white font-semibold">
+                <Text className="text-center font-semibold text-white">
                   Start Tracking
                 </Text>
               </Pressable>
           ) : (
-              <Pressable
-                  onPress={onSave}
-                  className="rounded-2xl bg-red-600 py-4"
-              >
-                <Text className="text-center text-white font-semibold">
+              <Pressable onPress={onSave} className="rounded-2xl bg-red-600 py-4">
+                <Text className="text-center font-semibold text-white">
                   Stop & Save
                 </Text>
               </Pressable>
           )}
 
           <Pressable onPress={() => router.push("/history")}>
-            <Text className="text-center text-blue-600 font-medium">
+            <Text className="text-center font-medium text-blue-600">
               Open History
             </Text>
           </Pressable>

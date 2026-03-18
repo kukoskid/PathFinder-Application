@@ -16,10 +16,13 @@ export default function ActivityDetailScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const activity = getActivityById(id);
 
-    if (!activity) {
+
+    if (!activity || activity.coordinates.length === 0) {
         return (
-            <View className="flex-1 items-center justify-center bg-white">
-                <Text>Активноста не е пронајдена.</Text>
+            <View className="flex-1 items-center justify-center bg-white px-6">
+                <Text className="text-base text-center">
+                    Активноста не е пронајдена или нема координати.
+                </Text>
             </View>
         );
     }
