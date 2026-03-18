@@ -34,7 +34,7 @@ export default function HomeScreen() {
     stopTracking();
 
     if (coordinates.length < 2 || distanceMeters < 10) {
-      Alert.alert("Премалку податоци", "Прошетај малку повеќе пред да зачуваш.");
+      Alert.alert("Премалку податоци (минимум 10 метра)", "Прошетај малку повеќе пред да зачуваш. Активноста ќе почне од почеток.");
       return;
     }
 
